@@ -12,24 +12,6 @@ CREATE TABLE Users (
     user_email VARCHAR(255) NOT NULL
 );
 
-# 예약 정보 테이블 
-CREATE TABLE Reservations (
-	user_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
-);
-
-# 위시 리스트 정보 테이블 
-CREATE TABLE Wish_List (
-	user_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES Product(id) ON DELETE CASCADE
-);
-
 # 숙소 상품 테이블 
 CREATE TABLE Products (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -37,6 +19,24 @@ CREATE TABLE Products (
     product_price VARCHAR(255) NOT NULL,
     product_address VARCHAR(255) NOT NULL,
     product_description TEXT NOT NULL
+);
+
+# 예약 정보 테이블 
+CREATE TABLE Reservations (
+	user_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
+);
+
+# 위시 리스트 정보 테이블 
+CREATE TABLE Wish_List (
+	user_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
 );
 
 # 숙소 지역  
@@ -47,7 +47,7 @@ CREATE TABLE cities (
 
 # 상품 지역
 CREATE TABLE Product_Cities (
-	id BIGINT AUTO_INCREMENT NOT NULL,
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	product_id BIGINT NOT NULL,
     city_id BIGINT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE,
@@ -62,7 +62,7 @@ CREATE TABLE Accommodation_Categories (
 
 # 상품 숙소 유형
 CREATE TABLE Product_Accommodation_Categories (
-	id BIGINT AUTO_INCREMENT NOT NULL,
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
     product_id BIGINT NOT NULL,
     accommodation_id BIGINT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES Products(id),
