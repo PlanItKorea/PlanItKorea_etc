@@ -25,6 +25,7 @@ CREATE TABLE Products (
 CREATE TABLE Reservations (
 	user_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,
+    person INT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
@@ -98,7 +99,17 @@ CREATE TABLE Sub_Products (
     sub_name VARCHAR(255) NOT NULL,
     sub_description TEXT NOT NULL,
     sub_price VARCHAR(255) NOT NULL,
+    sub_person INT NOT NULL,
     FOREIGN KEY (main_product_id) REFERENCES Products(id) ON DELETE CASCADE
+);
+
+# 객실 예약 날짜
+CREATE TABLE Sub_Products_Date (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    sub_product_id BIGINT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    FOREIGN KEY (main_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE
 );
 
 # 서브 상품 이미지
