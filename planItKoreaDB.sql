@@ -4,12 +4,14 @@ USE plan_it_korea;
 # 유저 테이블 
 CREATE TABLE Users (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(255) NOT NULL,
+    user_id VARCHAR(255) NOT NULL UNIQUE,
     user_password VARCHAR(255) NOT NULL,
     user_name VARCHAR(255) NOT NULL,
     user_birth_date DATE NOT NULL,
-    user_phone VARCHAR(15) NOT NULL,
-    user_email VARCHAR(255) NOT NULL
+    user_phone VARCHAR(15) NOT NULL UNIQUE,
+    user_email VARCHAR(255) NOT NULL UNIQUE,
+    sns_id VARCHAR(255) DEFAULT NULL,
+    join_path VARCHAR(5) NOT NULL
 );
 
 # 숙소 상품 테이블 
