@@ -18,21 +18,24 @@ CREATE TABLE Users (
 CREATE TABLE Products (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
     product_name VARCHAR(255) NOT NULL, # 숙소 이름
-    product_price VARCHAR(255) NOT NULL, # 숙소 평균 가격? 객실과 별도로 최상위 홈에 띄어지는
+    product_price VARCHAR(255) NOT NULL, # 숙소 가격? 객실과 별도로 최상위 홈에 띄어지는
     product_address VARCHAR(255) NOT NULL, # 숙소 주소
     product_description TEXT NOT NULL # 숙소 설명
 );
-
 # 숙소 설명 테이블 생성 ?
 
 
 # 예약 정보 테이블 
 CREATE TABLE Reservations (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 예약 고유 키
 	user_id BIGINT NOT NULL, # 유저 고유 값 
     product_id BIGINT NOT NULL, # 숙소 고유 값
-    person INT NOT NULL, # 인원 수 
+    sub_product_id BIGINT NOT NULL, # 객실 아이디
+    person BIGINT NOT NULL, # 인원 수 
+    total_price VARCHAR(255) NOT NULL, # 총 가격
     start_date DATE NOT NULL, # 체크인
     end_date DATE NOT NULL, # 체크아웃
+    FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
 );
@@ -84,13 +87,13 @@ VALUES (DEFAULT, "호텔&리조트"),
 		(DEFAULT, "펜션&풀빌라"),
 		(DEFAULT, "캠핑&글램핑");
         
-INSERT INTO Accommodation_Categories
-VALUES (DEFAULT, "호텔"),
-		(DEFAULT, "리조트"),
-		(DEFAULT, "펜션"),
-		(DEFAULT, "풀빌라"),
-		(DEFAULT, "캠핑"),
-		(DEFAULT, "글램핑");
+# INSERT INTO Accommodation_Categories
+# VALUES (DEFAULT, "호텔"),
+# 		(DEFAULT, "리조트"),
+# 		(DEFAULT, "펜션"),
+# 		(DEFAULT, "풀빌라"),
+# 		(DEFAULT, "캠핑"),
+# 		(DEFAULT, "글램핑");
 
 # 상품 & 숙소 유형 연결 테이블
 CREATE TABLE Product_Accommodation_Categories (
@@ -156,14 +159,14 @@ CREATE TABLE Sub_Products_Date (
     sub_product_id BIGINT NOT NULL, # 객실 고유 값
     start_date DATE NOT NULL, # 객실 체크인
     end_date DATE NOT NULL, # 객실 체크아웃
-    FOREIGN KEY (main_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE
+    FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE
 );
 
 # 서브 상품 이미지
 CREATE TABLE Sub_Product_Images (
 	sub_product_id BIGINT NOT NULL, # 고유 값
     sub_product_image VARCHAR(255) NOT NULL, # 객실 이미지
-    FOREIGN KEY (product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE
+    FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE
 );
 
 # 공지 사항
