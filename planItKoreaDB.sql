@@ -184,9 +184,10 @@ CREATE TABLE Inquiries (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
     user_id BIGINT, # 유저 고유 값
     inquiry_title VARCHAR(255) NOT NULl, # 질문 제목
-    inquiry_categorys ENUM("결제", "취소", "환불"), # 질문 유형
+    inquiry_category ENUM("결제", "취소", "환불"), # 질문 유형
     inquiry_content TEXT NOT NULL, # 질문 내용
-    inquiry_image VARCHAR(255)  # 질문 이미지
+    inquiry_image VARCHAR(255),  # 질문 이미지
+    FOREIGN KEY (user_id) REFERENCES `Users` (id) ON DELETE CASCADE
 );
 
 # 리뷰 게시판
