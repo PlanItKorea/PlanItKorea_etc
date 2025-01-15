@@ -33,8 +33,9 @@ CREATE TABLE Reservations (
     sub_product_id BIGINT NOT NULL, # 객실 아이디
     person BIGINT NOT NULL, # 인원 수 
     total_price VARCHAR(255) NOT NULL, # 총 가격
-    start_date DATE NOT NULL, # 체크인
-    end_date DATE NOT NULL, # 체크아웃
+    start_date TIMESTAMP NOT NULL, # 체크인
+    end_date TIMESTAMP NOT NULL, # 체크아웃
+    reservation_int INT NOT NULL DEFAULT 1, # 예약 상태
     FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
