@@ -43,6 +43,7 @@ CREATE TABLE Reservations (
 
 # 위시 리스트 정보 테이블 
 CREATE TABLE Wish_List (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT,
 	user_id BIGINT NOT NULL, # 유저 고유 값
     product_id BIGINT NOT NULL, # 숙소 고유 값
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
@@ -54,19 +55,6 @@ CREATE TABLE cities (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
     city_name VARCHAR(255) NOT NULL # 지역 이름 (서울, 부산, 제주, 경주, 가평, 강릉, 여수, 전주, 해남, 대구 등)
 );
-
-INSERT INTO cities 
-VALUES (DEFAULT, "서울"),
-		(DEFAULT, "부산"),
-        (DEFAULT, "제주"),
-        (DEFAULT, "경주"),
-        (DEFAULT, "가평"),
-        (DEFAULT, "강릉"),
-        (DEFAULT, "여수"),
-        (DEFAULT, "전주"),
-        (DEFAULT, "해남"),
-        (DEFAULT, "대구");
-        
 
 # 상품 & 지역 연결 테이블
 CREATE TABLE Product_Cities (
@@ -83,19 +71,6 @@ CREATE TABLE Accommodation_Categories (
     accommodation_name VARCHAR(255) NOT NULL # 숙소 유형 (호텔&리조트, 펜션&풀빌라, 캠핑&글램핑 등 ?)
 );
 
-INSERT INTO Accommodation_Categories
-VALUES (DEFAULT, "호텔&리조트"),
-		(DEFAULT, "펜션&풀빌라"),
-		(DEFAULT, "캠핑&글램핑");
-        
-# INSERT INTO Accommodation_Categories
-# VALUES (DEFAULT, "호텔"),
-# 		(DEFAULT, "리조트"),
-# 		(DEFAULT, "펜션"),
-# 		(DEFAULT, "풀빌라"),
-# 		(DEFAULT, "캠핑"),
-# 		(DEFAULT, "글램핑");
-
 # 상품 & 숙소 유형 연결 테이블
 CREATE TABLE Product_Accommodation_Categories (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
@@ -111,21 +86,6 @@ CREATE TABLE Facilities (
     facility_name VARCHAR(255) NOT NULL # 편의 시설 (사우나, 수영장, 바베큐, 세탁, 스파/월풀, 와이파이, 에어컨, 샤워실, 욕실용품, 조식, 주차, 반려견, 취사, OTT 등)
 );
 
-INSERT INTO Facilities
-VALUES (DEFAULT, "사우나"),
-		(DEFAULT, "수영장"),
-		(DEFAULT, "바베큐"),
-		(DEFAULT, "세탁"),
-		(DEFAULT, "스파&월풀"),
-		(DEFAULT, "와이파이"),
-		(DEFAULT, "에어컨"),
-		(DEFAULT, "샤워실"),
-		(DEFAULT, "욕실용품"),
-		(DEFAULT, "조식"),
-		(DEFAULT, "주차"),
-		(DEFAULT, "반려견"),
-		(DEFAULT, "취사"),
-		(DEFAULT, "OTT");
 
 # 숙소 & 편의 시설 연결 테이블
 CREATE TABLE Product_Facilities (
@@ -138,6 +98,7 @@ CREATE TABLE Product_Facilities (
 
 # 메인 상품 이미지
 CREATE TABLE Product_Images (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	product_id BIGINT NOT NULL, # 숙소 고유 값
     product_image VARCHAR(255) NOT NULL, # 숙소 이미지
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
@@ -165,6 +126,7 @@ CREATE TABLE Sub_Products_Date (
 
 # 서브 상품 이미지
 CREATE TABLE Sub_Product_Images (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	sub_product_id BIGINT NOT NULL, # 고유 값
     sub_product_image VARCHAR(255) NOT NULL, # 객실 이미지
     FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE
@@ -183,7 +145,7 @@ CREATE TABLE Boards (
 # 1대1 질문 게시판
 CREATE TABLE Inquiries (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
-    user_id BIGINT, # 유저 고유 값
+    user_id BIGINT NOT NULL, # 유저 고유 값
     inquiry_title VARCHAR(255) NOT NULl, # 질문 제목
     inquiry_category ENUM("결제", "취소", "환불"), # 질문 유형
     inquiry_content TEXT NOT NULL, # 질문 내용
