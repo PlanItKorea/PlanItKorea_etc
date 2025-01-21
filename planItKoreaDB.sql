@@ -18,24 +18,22 @@ CREATE TABLE Users (
 CREATE TABLE Products (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
     product_name VARCHAR(255) NOT NULL, # 숙소 이름
-    product_price VARCHAR(255) NOT NULL, # 숙소 가격? 객실과 별도로 최상위 홈에 띄어지는
+    product_price VARCHAR(255) NOT NULL, # 숙소 평균 가격? 객실과 별도로 최상위 홈에 띄어지는
     product_address VARCHAR(255) NOT NULL, # 숙소 주소
     product_description TEXT NOT NULL # 숙소 설명
 );
-# 숙소 설명 테이블 생성 ?
+# 숙소 설명 테이블 생성 
 
-
-# 예약 정보 테이블 
+# 예약 정보 테이블
 CREATE TABLE Reservations (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 예약 고유 키
-	user_id BIGINT NOT NULL, # 유저 고유 값 
+   id BIGINT AUTO_INCREMENT PRIMARY KEY, # 예약 고유 키
+   user_id BIGINT NOT NULL, # 유저 고유 값 
     product_id BIGINT NOT NULL, # 숙소 고유 값
     sub_product_id BIGINT NOT NULL, # 객실 아이디
     person BIGINT NOT NULL, # 인원 수 
     total_price VARCHAR(255) NOT NULL, # 총 가격
-    start_date TIMESTAMP NOT NULL, # 체크인
-    end_date TIMESTAMP NOT NULL, # 체크아웃
-    reservation_int INT NOT NULL DEFAULT 1, # 예약 상태
+    start_date DATE NOT NULL, # 체크인
+    end_date DATE NOT NULL, # 체크아웃
     FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
@@ -55,7 +53,7 @@ CREATE TABLE cities (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
     city_name VARCHAR(255) NOT NULL # 지역 이름 (서울, 부산, 제주, 경주, 가평, 강릉, 여수, 전주, 해남, 대구 등)
 );
-
+        
 # 상품 & 지역 연결 테이블
 CREATE TABLE Product_Cities (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
@@ -86,7 +84,6 @@ CREATE TABLE Facilities (
     facility_name VARCHAR(255) NOT NULL # 편의 시설 (사우나, 수영장, 바베큐, 세탁, 스파/월풀, 와이파이, 에어컨, 샤워실, 욕실용품, 조식, 주차, 반려견, 취사, OTT 등)
 );
 
-
 # 숙소 & 편의 시설 연결 테이블
 CREATE TABLE Product_Facilities (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
@@ -115,14 +112,16 @@ CREATE TABLE Sub_Products (
     FOREIGN KEY (main_product_id) REFERENCES Products(id) ON DELETE CASCADE
 );
 
-# 객실 예약 날짜
-CREATE TABLE Sub_Products_Date (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
-    sub_product_id BIGINT NOT NULL, # 객실 고유 값
-    start_date DATE NOT NULL, # 객실 체크인
-    end_date DATE NOT NULL, # 객실 체크아웃
-    FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE
-);
+# 객실 예약 날짜 (보류.......)
+-- CREATE TABLE Sub_Products_Date (
+-- 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
+--     sub_product_id BIGINT NOT NULL, # 객실 고유 값
+--     reservation_id BIGINT NOT NULL,
+--     start_date DATE NOT NULL, # 객실 체크인
+--     end_date DATE NOT NULL, # 객실 체크아웃
+--     FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE,
+--     FOREIGN KEY (sub_product_id) REFERENCES Sub_Products(id) ON DELETE CASCADE,
+-- );
 
 # 서브 상품 이미지
 CREATE TABLE Sub_Product_Images (
@@ -163,7 +162,6 @@ CREATE TABLE Reviews (
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
-
 
 
 
