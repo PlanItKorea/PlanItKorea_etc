@@ -20,7 +20,8 @@ CREATE TABLE Products (
     product_name VARCHAR(255) NOT NULL, # 숙소 이름
     product_price VARCHAR(255) NOT NULL, # 숙소 평균 가격? 객실과 별도로 최상위 홈에 띄어지는
     product_address VARCHAR(255) NOT NULL, # 숙소 주소
-    product_description TEXT NOT NULL # 숙소 설명
+    product_description TEXT NOT NULL, # 숙소 설명
+    product_category VARCHAR(255) NOT NULL # 숙소 유형 (호텔&리조트, 펜션&풀빌라, 캠핑&글램핑 등 ?)
 );
 # 숙소 설명 테이블 생성 
 
@@ -53,7 +54,7 @@ CREATE TABLE cities (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
     city_name VARCHAR(255) NOT NULL # 지역 이름 (서울, 부산, 제주, 경주, 가평, 강릉, 여수, 전주, 해남, 대구 등)
 );
-        
+            
 # 상품 & 지역 연결 테이블
 CREATE TABLE Product_Cities (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
@@ -61,21 +62,6 @@ CREATE TABLE Product_Cities (
     city_id BIGINT NOT NULL, # 지역 고유 값
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE,
     FOREIGN KEY (city_id) REFERENCES cities(id)
-);
-
-# 숙소 유형
-CREATE TABLE Accommodation_Categories (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
-    accommodation_name VARCHAR(255) NOT NULL # 숙소 유형 (호텔&리조트, 펜션&풀빌라, 캠핑&글램핑 등 ?)
-);
-
-# 상품 & 숙소 유형 연결 테이블
-CREATE TABLE Product_Accommodation_Categories (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY, # 고유 값
-    product_id BIGINT NOT NULL, # 숙소 고유 값
-    accommodation_id BIGINT NOT NULL, # 숙소 유형 고유 값
-    FOREIGN KEY (product_id) REFERENCES Products(id),
-    FOREIGN KEY (accommodation_id) REFERENCES Accommodation_Categories(id)
 );
 
 # 편의 시설
@@ -162,13 +148,4 @@ CREATE TABLE Reviews (
     FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 );
-
-
-
-
-
-
-
-
-
 
